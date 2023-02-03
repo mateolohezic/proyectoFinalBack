@@ -11,7 +11,8 @@ const juego = new Schema({
     image2: String,
     image3: String,
     image4: String,
-    rating: Number
+    favorite: Boolean,
+    published: Boolean
 })
 
 module.exports = model (`Juego`, juego)
