@@ -7,7 +7,7 @@ const getJuegos = async (req, res) => {
 }
 
 const crearJuego = async (req, res) => {
-    const { title, developer, categorie, date, price, synopsis, image1, image2, image3, image4, rating } = req.body;
+    const { title, developer, categorie, date, price, synopsis, image1, image2, image3, image4 } = req.body;
     const nuevoJuego = new Juego({
         title,
         developer,
@@ -18,8 +18,7 @@ const crearJuego = async (req, res) => {
         image1,
         image2,
         image3,
-        image4,
-        rating
+        image4
     })
     await nuevoJuego.save()
     res.status(200).send(`Se creo el juego con éxito.`)
@@ -32,7 +31,7 @@ const deleteJuego = async (req, res) => {
 }
 
 const patchJuego = async (req, res) => {
-    const { id, title, developer, categorie, date, price, synopsis, image1, image2, image3, image4, rating  } = req.body
+    const { id, title, developer, categorie, date, price, synopsis, image1, image2, image3, image4 } = req.body
     await Juego.findByIdAndUpdate(id, {
         title,
         developer,
@@ -43,8 +42,7 @@ const patchJuego = async (req, res) => {
         image1,
         image2,
         image3,
-        image4,
-        rating
+        image4
     })
     res.status(200).send(`Se actualizo el juego con éxito.`)
 };

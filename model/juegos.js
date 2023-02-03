@@ -10,8 +10,7 @@ const juego = new Schema({
     image1: String,
     image2: String,
     image3: String,
-    image4: String,
-    rating: Number
+    image4: String
 })
 
 module.exports = model (`Juego`, juego)
