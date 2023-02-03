@@ -26,8 +26,28 @@ const crearJuego = async (req, res) => {
 }
 
 const deleteJuego = async (req, res) => {
-    await Juego.findByIdAndDelete(req.params.userId);
+    const { id } = req.body
+    await Juego.findByIdAndDelete(id);
     res.status(200).send(`Se elimino el juego con éxito.`)
 }
 
-module.exports = { crearJuego, getJuegos, deleteJuego }
+const patchJuego = async (req, res) => {
+    const { id, title, developer, categorie, date, price, synopsis, image1, image2, image3, image4, rating  } = req.body
+    await Juego.findByIdAndUpdate(id, {
+        title,
+        developer,
+        categorie,
+        date,
+        price,
+        synopsis,
+        image1,
+        image2,
+        image3,
+        image4,
+        rating
+    })
+    res.status(200).send(`Se actualizo el juego con éxito.`)
+};
+
+
+module.exports = { crearJuego, getJuegos, deleteJuego, patchJuego }

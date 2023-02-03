@@ -1,17 +1,15 @@
 const express = require('express');
 const route = express.Router();
-const { crearJuego, getJuegos, deleteJuego } = require('../controllers/juegos');
+const { crearJuego, getJuegos, patchJuego, deleteJuego } = require('../controllers/juegos');
 
 
 route.get('/obtener-juego', getJuegos);
 
 route.post('/crear-juego', crearJuego)
 
-route.patch(`/editar-juego`, (req, res) => {
-    res.status(200).send(`Se edito el juego con éxito.`)
-});
+route.patch(`/editar-juego`, patchJuego);
 
-route.delete(`/:userId`, deleteJuego);
+route.delete(`/eliminar-juego`, deleteJuego);
 
 route.patch(`/error`, (req, res) => {
     res.status(404).send(`Error`)
