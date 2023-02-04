@@ -2,8 +2,13 @@ const Juego = require('../model/juegos');
 
 const getJuegos = async (req, res) => {
     const juegos = await Juego.find({})
-    res.json(juegos);
-    res.status(200).send("Se obtuvieron los datos con éxito.");
+    res.status(200).send(juegos);
+}
+
+const getJuegoEspecifico = async (req, res) => {
+    const { id } = req.params;
+    const juego = await Juego.findById(id)
+    res.status(200).send(juego);
 }
 
 const crearJuego = async (req, res) => {
@@ -56,4 +61,4 @@ const patchJuego = async (req, res) => {
 };
 
 
-module.exports = { crearJuego, getJuegos, deleteJuego, patchJuego }
+module.exports = { crearJuego, getJuegos, deleteJuego, patchJuego, getJuegoEspecifico }
