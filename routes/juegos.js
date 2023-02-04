@@ -3,7 +3,7 @@ const route = express.Router();
 const { crearJuego, getJuegos, patchJuego, deleteJuego } = require('../controllers/juegos');
 
 
-route.get('/obtener-juego', getJuegos);
+route.get('/obtener-juegos', getJuegos);
 
 route.post('/crear-juego', crearJuego)
 
