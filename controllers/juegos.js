@@ -40,9 +40,7 @@ const deleteJuego = async (req, res) => {
 }
 
 const patchJuego = async (req, res) => {
-    const { id, title, developer, categorie, date, price, synopsis, image1, image2, image3, image4  } = req.body
-    const favorite = false;
-    const published = true;
+    const { id, title, developer, categorie, date, price, synopsis, image1, image2, image3, image4, favorite, published  } = req.body
     await Juego.findByIdAndUpdate(id, {
         title,
         developer,
