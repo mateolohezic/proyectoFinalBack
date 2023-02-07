@@ -5,6 +5,12 @@ const getUser = async (req, res) => {
     res.status(200).send(users);
 }
 
+const getUserEspecifico = async (req, res) => {
+    const { id } = req.params;
+    const user = await User.findById(id)
+    res.status(200).send(user);
+}
+
 const crearUser = async (req, res) => {
     const { username, name, surname, age, email, password, country } = req.body;
     const status = "pendiente";
@@ -47,4 +53,12 @@ const patchUser = async (req, res) => {
     res.status(200).send(`Se actualizo el usuario con éxito.`)
 };
 
-module.exports = { crearUser, getUser, deleteUser, patchUser }
+const estadoUser = async (req, res) => {
+    const { id, status  } = req.body
+    await User.findByIdAndUpdate(id, {
+        status
+    })
+    res.status(200).send(`Se actualizo el usuario con éxito.`)
+};
+
+module.exports = { crearUser, getUser, deleteUser, patchUser, getUserEspecifico, estadoUser }
