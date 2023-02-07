@@ -2,13 +2,12 @@ const User = require('../model/users');
 
 const getUser = async (req, res) => {
     const users = await User.find({})
-    res.json(users);
-    res.status(200).send("Se obtuvieron los datos con éxito.");
+    res.status(200).send(users);
 }
 
 const crearUser = async (req, res) => {
     const { username, name, surname, age, email, password, country } = req.body;
-    const state = "pendiente";
+    const status = "pendiente";
     const rol = "user";
     const nuevoUser = new User({
         username,
@@ -18,7 +17,7 @@ const crearUser = async (req, res) => {
         email,
         password,
         country,
-        state,
+        status,
         rol
     })
     await nuevoUser.save()
@@ -33,7 +32,7 @@ const deleteUser = async (req, res) => {
 
 const patchUser = async (req, res) => {
     const { username, name, surname, age, email, password, country  } = req.body
-    const state = "pendiente";
+    const status = "pendiente";
     const rol = "user";
     await User.findOneAndUpdate(username, {
         name,
@@ -42,7 +41,7 @@ const patchUser = async (req, res) => {
         email,
         password,
         country,
-        state,
+        status,
         rol
     })
     res.status(200).send(`Se actualizo el usuario con éxito.`)
