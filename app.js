@@ -7,14 +7,16 @@ app.use(express.json());
 app.use(cors());
 require('./database/db');
 
-const crearJuego = require('./routes/juegos');
-const crearUser = require('./routes/users');
-const crearCategoria = require('./routes/categorias');
+const juegos = require('./routes/juegos');
+const users = require('./routes/users');
+const categorias = require('./routes/categorias');
+const comentarios = require('./routes/comentarios');
 
 
-app.use('/', crearJuego);
-app.use('/users', crearUser);
-app.use('/categorias', crearCategoria);
+app.use('/', juegos);
+app.use('/users', users);
+app.use('/categorias', categorias);
+app.use('/comentarios', comentarios);
 
 app.listen(port, () =>  {
     console.log(`Estamos trabajando en el puerto ${port}`);
