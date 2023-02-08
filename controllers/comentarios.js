@@ -1,4 +1,5 @@
 const Comentario = require('../model/comentarios');
+const { validationResult } = require('express-validator');
 
 const getComentarios = async (req, res) => {
     const comentarios = await Comentario.find({})
@@ -7,6 +8,12 @@ const getComentarios = async (req, res) => {
 
 const crearComentarios = async (req, res) => {
     const { username, game, comentario } = req.body;
+    
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
     const nuevaComentario = new Comentario({
         username,
         game,

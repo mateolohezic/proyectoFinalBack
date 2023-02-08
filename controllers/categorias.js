@@ -1,4 +1,5 @@
 const Categoria = require('../model/categorias');
+const { validationResult } = require('express-validator');
 
 const getCategoria = async (req, res) => {
     const categorias = await Categoria.find({})
@@ -12,7 +13,13 @@ const getCategoriaEspecifica = async (req, res) => {
 }
 
 const crearCategoria = async (req, res) => {
-    const { title, name } = req.body;
+    const { name } = req.body;
+
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    
     const published = true;
     const nuevaCategoria = new Categoria({
         name,
@@ -30,6 +37,12 @@ const deleteCategoria = async (req, res) => {
 
 const patchCategoria = async (req, res) => {
     const { id, name, published  } = req.body
+
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
     await Categoria.findByIdAndUpdate(id, {
         name,
         published

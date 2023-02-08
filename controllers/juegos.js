@@ -1,4 +1,5 @@
 const Juego = require('../model/juegos');
+const { validationResult } = require('express-validator');
 
 const getJuegos = async (req, res) => {
     const juegos = await Juego.find({})
@@ -13,6 +14,12 @@ const getJuegoEspecifico = async (req, res) => {
 
 const crearJuego = async (req, res) => {
     const { title, developer, categorie, date, price, synopsis, image1, image2, image3, image4 } = req.body;
+
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    
     const favorite = false;
     const published = true;
     const nuevoJuego = new Juego({
@@ -35,12 +42,19 @@ const crearJuego = async (req, res) => {
 
 const deleteJuego = async (req, res) => {
     const { id } = req.body
+    
     await Juego.findByIdAndDelete(id);
     res.status(200).send(`Se elimino el juego con éxito.`)
 }
 
 const patchJuego = async (req, res) => {
     const { id, title, developer, categorie, date, price, synopsis, image1, image2, image3, image4, favorite, published  } = req.body
+
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
     await Juego.findByIdAndUpdate(id, {
         title,
         developer,
