@@ -26,7 +26,7 @@ const crearComentarios = async (req, res) => {
 const deleteComentarios = async (req, res) => {
     const { id } = req.body
     await Comentario.findByIdAndDelete(id);
-    res.status(200).send(`Se elimino elcomentario con éxito.`)
+    res.status(200).send(`Se elimino el comentario con éxito.`)
 }
 
 module.exports = { getComentarios, crearComentarios, deleteComentarios }

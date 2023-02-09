@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config();
 const claveToken = process.env.CLAVE;
 const { validationResult } = require('express-validator');
-// const bcrypt = require('bcrypt');
+const bcrypt = require('bcrypt');
 
 const getUser = async (req, res) => {
     const users = await User.find({})
@@ -24,8 +24,8 @@ const crearUser = async (req, res) => {
       return res.status(400).json({ errors: errors.array() });
     }
 
-    // const saltRound = 15; 
-    // const passwordEncripted = bcrypt.hashSync(password, saltRound);
+    const saltRound = 15; 
+    const passwordEncripted = bcrypt.hashSync(password, saltRound);
     const status = "pendiente";
     const rol = "user";
     const nuevoUser = new User({
@@ -34,7 +34,7 @@ const crearUser = async (req, res) => {
         surname,
         age,
         email,
-        password,
+        password: passwordEncripted,
         country,
         status,
         rol
@@ -83,30 +83,18 @@ const estadoUser = async (req, res) => {
 const loginUser = async (req, res) => {
     const { username, password } = req.body
 
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
-    }
-
     try{
-        const user = await User.findOne(username)
-        if (!user) {
-            return res.json({
-                mensaje: "Usuario inexistente"
-            })
-        }
-
-        const result = bcrypt.compareSync(password, user.password)
-        const toker = jwt.sing({user}, claveToken , { expiresIn : "1h"})
-
-        if (result) {
-            return res.status(200).json({
-                mensaje: "Usuario logeado con exito",
-                result,
-                token
-            })
-        } else {
-            res.status(404).send(`Datos incorrectos.`)
+        const user = await User.findOne({"username": username})
+        if (user && user.status === "activo") {
+            if (bcrypt.compareSync(password, user.password)) {
+                const token = jwt.sign({user}, claveToken , { expiresIn : "1h"})
+                res.status(200).json({user,token})
+          
+              } else {
+                res.status(206).send({message : 'Contraseña incorrecta'})
+              }
+            } else {
+              res.status(206).send({message : 'Usuario no encontrado'})
         }
     }
     catch(error){

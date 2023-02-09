@@ -10,14 +10,14 @@ route.get('/obtener-categorias', getCategoria);
 route.get('/:id', getCategoriaEspecifica);
 
 route.post('/crear-categoria',
-body('name').trim().escape().isAlpha('es-ES', {ignore: ' '}).not().isEmpty().isLength({min: 1, max: 20}).withMessage('Campo invalido'),
-crearCategoria)
+body('name').trim().escape().isAlphanumeric('es-ES', {ignore: ' '}).not().isEmpty().isLength({min: 1, max: 20}).withMessage('Campo invalido'),
+jwtValidator, crearCategoria)
 
 route.patch(`/editar-categoria`, 
-body('name').trim().escape().isAlpha('es-ES', {ignore: ' '}).not().isEmpty().isLength({min: 1, max: 20}).withMessage('Campo invalido'),
-patchCategoria);
+body('name').trim().escape().isAlphanumeric('es-ES', {ignore: ' '}).not().isEmpty().isLength({min: 1, max: 20}).withMessage('Campo invalido'),
+jwtValidator, patchCategoria);
 
-route.delete(`/eliminar-categoria`, deleteCategoria);
+route.delete(`/eliminar-categoria`, jwtValidator, deleteCategoria);
 
 route.patch(`/error`, (req, res) => {
     res.status(404).send(`Error`)

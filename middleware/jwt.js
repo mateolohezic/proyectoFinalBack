@@ -3,7 +3,7 @@ require('dotenv').config();
 const claveToken = process.env.CLAVE;
 
 const jwtValidator = async (req,res, next) => {
-    const { accessToken} = req.body;
+    const { accessToken } = req.body;
 
     try {
         const verify = jwt.verify(accessToken, claveToken);
