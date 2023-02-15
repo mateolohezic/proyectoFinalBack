@@ -1,6 +1,6 @@
 const express = require('express');
 const route = express.Router();
-const { crearUser, getUser, patchUser, deleteUser, getUserEspecifico, estadoUser, loginUser } = require('../controllers/users');
+const { crearUser, getUser, patchUser, deleteUser, getUserEspecifico, estadoUser, loginUser, agregarCarritos, agregarFavoritos } = require('../controllers/users');
 const { jwtValidator } = require('../middleware/jwt');
 const { body } = require('express-validator');
 
@@ -30,6 +30,10 @@ body('country').trim().escape().not().isEmpty().isLength({min: 1, max: 50}).with
 patchUser);
 
 route.patch(`/estado-user`, jwtValidator, estadoUser);
+
+route.patch(`/agregar-carrito`, agregarCarritos);
+
+route.patch(`/agregar-favorito`, agregarFavoritos);
 
 route.delete(`/eliminar-user`, jwtValidator, deleteUser);
 

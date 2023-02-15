@@ -9,7 +9,9 @@ const user = new Schema({
     password: String,
     country: String,
     status: String,
-    rol: String
+    rol: String,
+    favorites: Array,
+    cart: Array
 })
 
 module.exports = model (`User`, user)

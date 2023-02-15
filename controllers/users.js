@@ -37,7 +37,9 @@ const crearUser = async (req, res) => {
         password: passwordEncripted,
         country,
         status,
-        rol
+        rol,
+        favorites: [],
+        cart: []
     })
     await nuevoUser.save()
     res.status(200).send(`Se creo el usuario con éxito.`)
@@ -80,6 +82,22 @@ const estadoUser = async (req, res) => {
     res.status(200).send(`Se actualizo el usuario con éxito.`)
 };
 
+const agregarFavoritos = async (req, res) => {
+    const { id, favorites  } = req.body
+    await User.findByIdAndUpdate(id, {
+        favorites
+    })
+    res.status(200).send(`Se actualizo el usuario con éxito.`)
+};
+
+const agregarCarritos = async (req, res) => {
+    const { id, cart  } = req.body
+    await User.findByIdAndUpdate(id, {
+        cart
+    })
+    res.status(200).send(`Se actualizo el usuario con éxito.`)
+};
+
 const loginUser = async (req, res) => {
     const { username, password } = req.body
 
@@ -98,9 +116,9 @@ const loginUser = async (req, res) => {
         }
     }
     catch(error){
-        console.log(error);
+        console.error(error);
     }
 };
 
 
-module.exports = { crearUser, getUser, deleteUser, patchUser, getUserEspecifico, estadoUser, loginUser }
+module.exports = { crearUser, getUser, deleteUser, patchUser, getUserEspecifico, estadoUser, loginUser, agregarCarritos, agregarFavoritos }

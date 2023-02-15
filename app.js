@@ -11,18 +11,18 @@ const juegos = require('./routes/juegos');
 const users = require('./routes/users');
 const categorias = require('./routes/categorias');
 const comentarios = require('./routes/comentarios');
-const carrito = require('./routes/carrito');
-const favorito = require('./routes/favorito');
 const consultas = require('./routes/consultas');
+const mercadopago = require('./routes/mercadopago');
+const compra = require('./routes/compra');
 
 
 app.use('/', juegos);
 app.use('/users', users);
 app.use('/categorias', categorias);
 app.use('/comentarios', comentarios);
-app.use('/carrito', carrito);
-app.use('/favorito', favorito);
 app.use('/consulta', consultas);
+app.use('/pago', mercadopago);
+app.use('/compra', compra);
 
 app.listen(port, () =>  {
     console.log(`Estamos trabajando en el puerto ${port}`);
