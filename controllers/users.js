@@ -120,5 +120,35 @@ const loginUser = async (req, res) => {
     }
 };
 
+const emailUser = async (req, res) => {
+    const { email } = req.body
 
-module.exports = { crearUser, getUser, deleteUser, patchUser, getUserEspecifico, estadoUser, loginUser, agregarCarritos, agregarFavoritos }
+    try{
+        const user = await User.findOne({"email": email})
+        if (user) {
+                res.status(200).send(user)
+            } else {
+                res.status(206).send({message : 'Usuario no encontrado'})
+        }
+    }
+    catch(error){
+        console.error(error);
+    }
+};
+
+const restablecerContraseña = async (req, res) => {
+    
+    const { id, password  } = req.body
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    const saltRound = 15; 
+    const passwordEncripted = bcrypt.hashSync(password, saltRound);
+    await User.findByIdAndUpdate(id, {
+        password: passwordEncripted
+    })
+    res.status(200).send(`Se actualizo la contraseña con éxito.`)
+};
+
+module.exports = { crearUser, getUser, deleteUser, patchUser, getUserEspecifico, estadoUser, loginUser, agregarCarritos, agregarFavoritos, emailUser, restablecerContraseña }

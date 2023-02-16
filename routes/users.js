@@ -1,6 +1,6 @@
 const express = require('express');
 const route = express.Router();
-const { crearUser, getUser, patchUser, deleteUser, getUserEspecifico, estadoUser, loginUser, agregarCarritos, agregarFavoritos } = require('../controllers/users');
+const { crearUser, getUser, patchUser, deleteUser, getUserEspecifico, estadoUser, loginUser, agregarCarritos, agregarFavoritos, emailUser, restablecerContraseña } = require('../controllers/users');
 const { jwtValidator } = require('../middleware/jwt');
 const { body } = require('express-validator');
 
@@ -41,5 +41,11 @@ route.post(`/login-user`,
 body('username').trim().escape().not().isEmpty().isLength({min: 1, max: 50}).withMessage('Campo invalido'),
 body('password').trim().escape().not().isEmpty().isLength({min: 6, max: 25}).withMessage('Campo invalido'),
 loginUser);
+
+route.patch(`/restablecer-password`,
+body('password').trim().escape().not().isEmpty().isLength({min: 6, max: 25}).withMessage('Campo invalido'),
+restablecerContraseña);
+
+route.post(`/restablecer-email`, emailUser)
 
 module.exports = route;
