@@ -26,8 +26,8 @@ const generarPago = async (req, res) => {
                 name: user
             },
         back_urls: {
-            success: "http://localhost:3000/Success",
-            failure: "http://localhost:3000/Failure"
+            success: "https://mateo-lohezic-proyecto-final-rolling-code.up.railway.app/Success",
+            failure: "https://mateo-lohezic-proyecto-final-rolling-code.up.railway.app/Failure"
           },
         auto_return: "approved"
       };
