@@ -6,11 +6,12 @@ const getCompra = async (req, res) => {
 }
 
 const crearCompra = async (req, res) => {
-    const { idCompra, items } = req.body;
+    const { idCompra, price, user, items } = req.body;
     const nuevaCompra = new Compra({
         idCompra,
         price,
         user,
+        items,
         pay: false
     })
     await nuevaCompra.save()

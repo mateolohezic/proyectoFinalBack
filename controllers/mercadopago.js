@@ -11,7 +11,7 @@ mercadopago.configure({
   
 
 const generarPago = async (req, res) => {
-    const { title, price, quantity, user } = req.body;
+    const { title, price, user } = req.body;
     
     let preference = {
         binary_mode: true,
@@ -19,7 +19,7 @@ const generarPago = async (req, res) => {
             {
                 title: title,
                 unit_price: price,
-                quantity: quantity,
+                quantity: 1,
             }],
         payer: 
             {
